@@ -1,19 +1,20 @@
-import { ThemeProvider } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
-import { LoadingContextProvider } from './context/loadingContext';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import AdminPage from './pages/AdminPage';
-import MyAccount from './pages/MyAccount';
+import { ThemeProvider } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
+import { LoadingContextProvider } from "./context/loadingContext";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import AdminPage from "./pages/AdminPage";
+import MyAccount from "./pages/MyAccount";
+import StepsPage from "./pages/StepsPage";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#405DE6', // Cor principal
+      main: "#405DE6", // Cor principal
     },
     secondary: {
-      main: '#F7F7FC', // Cor secundária
+      main: "#F7F7FC", // Cor secundária
     },
   },
   typography: {
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/minhaconta" element={<MyAccount />} />
+                <Route path="/steps" element={<StepsPage />} />
               </Routes>
             </div>
           </Router>
