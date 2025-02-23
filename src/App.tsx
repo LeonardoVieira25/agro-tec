@@ -7,7 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import MyAccount from "./pages/MyAccount";
 import StepsPage from "./pages/StepsPage";
-
+import Analysis from "./pages/Analysis";
 const theme = createTheme({
   palette: {
     primary: {
@@ -21,7 +21,6 @@ const theme = createTheme({
     fontFamily: '"Inter", "Roboto", "Arial", sans-serif',
   },
 });
-
 function App() {
   return (
     <>
@@ -35,6 +34,7 @@ function App() {
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/minhaconta" element={<MyAccount />} />
                 <Route path="/steps" element={<StepsPage />} />
+                <Route path="/analysisform" element={<Analysis />} />
               </Routes>
             </div>
           </Router>

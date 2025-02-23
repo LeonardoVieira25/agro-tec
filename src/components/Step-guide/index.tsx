@@ -72,6 +72,7 @@ export default function StepGuide() {
           color: "white",
           px: 8,
         }}
+        href="/analysisform"
       >
         INICIAR
       </Button>
