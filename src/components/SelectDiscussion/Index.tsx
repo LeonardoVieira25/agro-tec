@@ -18,7 +18,7 @@ export const SelectDiscussion = () => {
         variant="h1"
         sx={{ fontWeight: "bold", fontSize: "1.5rem", mb: 1 }}
       >
-        Seja bem vindo(a) ao Open Class!
+        Seja bem vindo(a) ao AgroTech!
       </Typography>
       <Typography
         variant="body1"

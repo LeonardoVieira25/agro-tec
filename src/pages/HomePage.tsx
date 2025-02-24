@@ -65,7 +65,7 @@ function HomePage() {
             <SelectDiscussion />
           )}
           <div>
-            <Link to="/steps">Go to Steps Page</Link>
+            <Link to="/steps">Ir para o manual</Link>
           </div>
         </Box>
       </Layout>
