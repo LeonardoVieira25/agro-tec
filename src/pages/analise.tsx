@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../components/Layout/Index';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import {
   LineChart,
   Line,
@@ -65,6 +65,14 @@ const data = [
     deficitHidrico: -2,
     custo: 20,
   },
+];
+
+const dataCost = [
+  { temperatura: 25, custo: 25 },
+  { temperatura: 28, custo: 30 },
+  { temperatura: 30, custo: 40 },
+  { temperatura: 32, custo: 35 },
+  { temperatura: 29, custo: 20 },
 ];
 
 function numberFormatter(value: number) {
@@ -265,7 +273,40 @@ function AnalisePage() {
             </ResponsiveContainer>
           </Box>
         </Box>
+        <Box sx={{ width: '100%', mt: 5 }}>
+          <Typography sx={{ textAlign: 'left', mb: 2 }}>
+            Custo de Produção x Temperatura
+          </Typography>
+          <ResponsiveContainer width="100%" height={300}>
+            <ScatterChart>
+              <CartesianGrid />
+              <XAxis
+                type="number"
+                dataKey="temperatura"
+                name="Temperatura (°C)"
+                unit="°C"
+              />
+              <YAxis type="number" dataKey="custo" name="Custo" unit="R$" />
+              <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+              <Scatter name="Análise" data={dataCost} fill="#8884d8" />
+            </ScatterChart>
+          </ResponsiveContainer>
+        </Box>
+
         <ConclusaoAnalise />
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: '#428C5C',
+            '&:hover': { backgroundColor: '#277357' },
+            color: 'white',
+            px: 8,
+            my: 5,
+          }}
+          href="/analysisform"
+        >
+          ANALISAR OUTROS DADOS
+        </Button>
       </Box>
     </Layout>
   );
