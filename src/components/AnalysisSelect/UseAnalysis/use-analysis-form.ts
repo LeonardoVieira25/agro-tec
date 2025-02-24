@@ -1,7 +1,7 @@
 import type React from "react";
 import { useState } from "react";
 
-interface FormData {
+export interface FormData {
   tempMax: string;
   tempMin: string;
   precipMax: string;

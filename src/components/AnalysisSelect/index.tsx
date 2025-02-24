@@ -27,7 +27,7 @@ export function AnalysisSelect() {
       >
         Dados para Análise
       </Typography>
-      <AnalysisForm />
+      <AnalysisForm onSubmitted={(result) => console.log(result)}/>
     </Box>
   );
 }
