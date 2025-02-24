@@ -254,7 +254,7 @@ function UniversityScreen({
   const [selectedCourse, setSelectedDiscussion] = useState<Discussion>();
 
   useEffect(() => {
-    getDiscussions(selectedUniversity.name).then((discussions) =>
+    getDiscussions().then((discussions) =>
       setCourses(discussions)
     );
   }, [selectedUniversity]);
@@ -330,7 +330,7 @@ function UniversityScreen({
                   color="error"
                   onClick={() =>
                     deleteCourse(discussion).then(() =>
-                      getDiscussions(selectedUniversity.name).then(
+                      getDiscussions().then(
                         (discussions) => setCourses(discussions)
                       )
                     )
