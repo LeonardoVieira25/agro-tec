@@ -2,7 +2,7 @@
 import { Box, Button, Input, Typography } from '@mui/material';
 import { NumberField } from './NumberField';
 import { useAnalysisForm } from './UseAnalysis/use-analysis-form';
-import { Upload, WindowRounded } from '@mui/icons-material';
+import { Upload } from '@mui/icons-material';
 
 export function AnalysisForm() {
   const { formData, handleChange, handleSubmit } = useAnalysisForm();

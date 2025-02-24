@@ -1,5 +1,5 @@
-import type React from "react";
-import { useState } from "react";
+import type React from 'react';
+import { useState } from 'react';
 
 interface FormData {
   tempMax: string;
@@ -19,19 +19,19 @@ interface FormData {
 
 export function useAnalysisForm() {
   const [formData, setFormData] = useState<FormData>({
-    tempMax: "",
-    tempMin: "",
-    precipMax: "",
-    precipMin: "",
-    evapMax: "",
-    evapMin: "",
-    deficitMax: "",
-    deficitMin: "",
-    diasSemChuva: "",
-    tempAcimaX: "",
-    diasAcimaX: "",
-    tipoCultura: "",
-    porcentagemAumento: "",
+    tempMax: '35',
+    tempMin: '18',
+    precipMax: '120',
+    precipMin: '10',
+    evapMax: '5',
+    evapMin: '1',
+    deficitMax: '30',
+    deficitMin: '5',
+    diasSemChuva: '10',
+    tempAcimaX: '38',
+    diasAcimaX: '7',
+    tipoCultura: 'Milho',
+    porcentagemAumento: '5.5',
   });
 
   const handleChange = (field: keyof FormData, value: string) => {
@@ -43,7 +43,7 @@ export function useAnalysisForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form data:", formData);
+    console.log('Form data:', formData);
     // Adicione aqui a lógica para enviar os dados
   };
 
