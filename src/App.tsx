@@ -8,6 +8,7 @@ import AdminPage from './pages/AdminPage';
 import MyAccount from './pages/MyAccount';
 import StepsPage from './pages/StepsPage';
 import Analysis from './pages/Analysis';
+import AnalisePage from './pages/analise';
 const theme = createTheme({
   palette: {
     primary: {
@@ -35,6 +36,7 @@ function App() {
                 <Route path="/minhaconta" element={<MyAccount />} />
                 <Route path="/steps" element={<StepsPage />} />
                 <Route path="/analysisform" element={<Analysis />} />
+                <Route path="/analise" element={<AnalisePage />} />
               </Routes>
             </div>
           </Router>

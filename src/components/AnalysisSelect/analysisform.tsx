@@ -2,7 +2,7 @@
 import { Box, Button, Input, Typography } from '@mui/material';
 import { NumberField } from './NumberField';
 import { useAnalysisForm } from './UseAnalysis/use-analysis-form';
-import { Upload } from '@mui/icons-material';
+import { Upload, WindowRounded } from '@mui/icons-material';
 
 export function AnalysisForm() {
   const { formData, handleChange, handleSubmit } = useAnalysisForm();
@@ -94,15 +94,6 @@ export function AnalysisForm() {
               label={label}
               value={formData[key]}
               onChange={(value) => handleChange(key, value)}
-              sx={{
-                margin: '8px 0', // Adicionando margem aos inputs
-                '& input': {
-                  fontFamily: 'Arial, sans-serif', // Definindo a fonte dos inputs
-                },
-                '& button': {
-                  color: 'green', // Estilizando os botões de incremento e decremento
-                },
-              }}
             />
           ))}
         </Box>
@@ -162,16 +153,19 @@ export function AnalysisForm() {
         {/* Botão de Envio */}
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
           <Button
-            type="submit"
             variant="contained"
             sx={{
-              bgcolor: 'green',
-              '&:hover': { bgcolor: 'darkgreen' },
+              bgcolor: '#428C5C',
+              '&:hover': { filter: 'brightness(0.9)' },
               color: 'white',
               px: 4,
               py: 1.5,
               borderRadius: 2,
-              fontFamily: 'Arial, sans-serif', // Definindo a fonte do botão
+              fontFamily: 'Inter, sans-serif', // Definindo a fonte do botão
+              fontWeight: '600',
+            }}
+            onClick={() => {
+              window.location.href = '/analise';
             }}
           >
             Analisar Dados

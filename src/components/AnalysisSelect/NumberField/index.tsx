@@ -1,4 +1,5 @@
-import { Box, Button, Input } from "@mui/material";
+import { Box, Button, Input } from '@mui/material';
+import './style.css';
 
 interface NumberFieldProps {
   label: string;
@@ -20,23 +21,23 @@ export function NumberField({ label, value, onChange }: NumberFieldProps) {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
       <label className="text-sm font-medium">{label}</label>
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <Button
           type="button"
           onClick={handleDecrement}
           sx={{
-            width: "32px",
-            height: "32px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            border: "1px solid",
-            borderRadius: "4px",
-            borderColor: "darkgray",
-            bgcolor: "#D9D9D9",
-            color: "black", // Change the color of the "+"
+            width: '32px',
+            height: '32px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '1px solid',
+            borderRadius: '4px',
+            borderColor: 'darkgray',
+            bgcolor: '#D9D9D9',
+            color: 'black', // Change the color of the "+"
           }}
         >
           -
@@ -45,28 +46,29 @@ export function NumberField({ label, value, onChange }: NumberFieldProps) {
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          className="input-number"
           sx={{
-            width: "64px",
-            height: "32px",
-            textAlign: "center",
-            border: "1px solid",
-            borderRadius: "4px",
+            width: '64px',
+            height: '32px',
+            textAlign: 'center',
+            border: '1px solid',
+            borderRadius: '4px',
           }}
         />
         <Button
           type="button"
           onClick={handleIncrement}
           sx={{
-            width: "32px",
-            height: "32px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            border: "1px solid",
-            borderColor: "darkgray",
-            borderRadius: "4px",
-            bgcolor: "#D9D9D9",
-            color: "black", // Change the color of the "+"
+            width: '32px',
+            height: '32px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '1px solid',
+            borderColor: 'darkgray',
+            borderRadius: '4px',
+            bgcolor: '#D9D9D9',
+            color: 'black', // Change the color of the "+"
           }}
         >
           +
