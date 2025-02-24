@@ -1,12 +1,15 @@
-'use client';
-import { Box, Button, Input, Typography } from '@mui/material';
-import { NumberField } from './NumberField';
-import { useAnalysisForm } from './UseAnalysis/use-analysis-form';
-import { Upload } from '@mui/icons-material';
-import { useState } from 'react';
+"use client";
+import { Upload } from "@mui/icons-material";
+import { Box, Button, Input, Typography } from "@mui/material";
+import { useState } from "react";
+import { NumberField } from "./NumberField";
+import {
+  FormData as FormDataType,
+  useAnalysisForm,
+} from "./UseAnalysis/use-analysis-form";
 
 export function AnalysisForm({
-  onSubmitted
+  onSubmitted,
 }: {
   onSubmitted: (result: any) => any;
 }) {
@@ -15,7 +18,7 @@ export function AnalysisForm({
 
   async function clickOnSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log(file)
+    console.log(file);
     if (!file) {
       alert("Please upload a file.");
       return;
@@ -142,7 +145,9 @@ export function AnalysisForm({
               key={key}
               label={label}
               value={formData[key as keyof FormDataType]}
-              onChange={(value) => handleChange(key as keyof FormDataType, value)}
+              onChange={(value) =>
+                handleChange(key as keyof FormDataType, value)
+              }
             />
           ))}
         </Box>
@@ -204,14 +209,14 @@ export function AnalysisForm({
           <Button
             variant="contained"
             sx={{
-              bgcolor: '#428C5C',
-              '&:hover': { filter: 'brightness(0.9)' },
-              color: 'white',
+              bgcolor: "#428C5C",
+              "&:hover": { filter: "brightness(0.9)" },
+              color: "white",
               px: 4,
               py: 1.5,
               borderRadius: 2,
-              fontFamily: 'Inter, sans-serif', // Definindo a fonte do botão
-              fontWeight: '600',
+              fontFamily: "Inter, sans-serif", // Definindo a fonte do botão
+              fontWeight: "600",
             }}
             type="submit"
             // onClick={() => {
