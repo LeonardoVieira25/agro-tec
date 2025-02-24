@@ -1,20 +1,20 @@
-import { ThemeProvider } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
-import { LoadingContextProvider } from "./context/loadingContext";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import AdminPage from "./pages/AdminPage";
-import MyAccount from "./pages/MyAccount";
-import StepsPage from "./pages/StepsPage";
-import Analysis from "./pages/Analysis";
+import { ThemeProvider } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
+import { LoadingContextProvider } from './context/loadingContext';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import AdminPage from './pages/AdminPage';
+import MyAccount from './pages/MyAccount';
+import StepsPage from './pages/StepsPage';
+import Analysis from './pages/Analysis';
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#405DE6", // Cor principal
+      main: '#428C5C', // Cor principal
     },
     secondary: {
-      main: "#F7F7FC", // Cor secundária
+      main: '#F1F1F1', // Cor secundária
     },
   },
   typography: {

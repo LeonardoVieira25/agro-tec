@@ -59,13 +59,13 @@ export function DiscussionSelector() {
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  background: '#2E2E2E',
+                  background: '#f4f4f4',
                   p: '1rem 1.5rem',
                   discussãor: 'pointer',
                   borderRadius: '6px',
                   transition: 'all ease-in-out 0.2s',
                   '&:hover': {
-                    boxShadow: '0px 0px 8px 4px rgba(64, 93, 230, 0.6)',
+                    boxShadow: '0px 0px 8px 4px rgba(66, 140, 92, 0.6)',
                   },
                 }}
                 onClick={() => setSelectedDiscussion(discussion)}

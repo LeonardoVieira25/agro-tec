@@ -1,7 +1,11 @@
 import { Box, Typography } from '@mui/material';
 import { Discussion } from '../types/discussion';
 
-export default function DiscussionSubmittedCard({ discussion }: { discussion: Discussion }) {
+export default function DiscussionSubmittedCard({
+  discussion,
+}: {
+  discussion: Discussion;
+}) {
   return (
     <Box
       sx={{
@@ -9,8 +13,8 @@ export default function DiscussionSubmittedCard({ discussion }: { discussion: Di
         flexDirection: 'column',
         width: 'fit-content',
         p: '0.75rem 1rem',
-        background: '#2E2E2E',
-        color: '#f2f2f2',
+        background: '#f4f4f4',
+        color: '#2e2e2e',
         borderRadius: '6px',
       }}
     >
@@ -19,7 +23,7 @@ export default function DiscussionSubmittedCard({ discussion }: { discussion: Di
       </Typography>
       <Typography
         variant="body1"
-        sx={{ fontSize: '0.75rem', fontWeight: '300', color: '#ccc' }}
+        sx={{ fontSize: '0.75rem', fontWeight: '300', color: '#2e2e2e' }}
       >
         cod: {discussion.code}
       </Typography>

@@ -22,8 +22,8 @@ export default function Layout({ children }: LayoutProps) {
     <Box
       sx={{
         minHeight: '100vh',
-        background: '#1A1A1D',
-        color: '#F2F2F2',
+        background: '#fff',
+        color: '#1A1A1D',
       }}
     >
       <Header />

@@ -11,7 +11,7 @@ export const InputText = ({ label, value }: InputTextProps) => {
       sx={{
         fontWeight: '600',
         fontSize: '14px',
-        color: '#fff',
+        color: '#2e2e2e',
         display: 'flex',
         flexDirection: 'column',
       }}
@@ -21,14 +21,15 @@ export const InputText = ({ label, value }: InputTextProps) => {
         sx={{
           p: '0.5rem 0.75rem',
           borderRadius: '8px',
-          border: '1px solid #202024',
-          background: '#202024',
-          color: '#f2f2f2', // Aplica a cor do texto no estilo principal
+          border: '1px solid #fff',
+          background: '#fff',
+          color: '#2e2e2e', // Aplica a cor do texto no estilo principal
           fontSize: '14px',
+          margin: '0.25rem',
           mt: '0.5rem',
           '&.Mui-focused': {
-            borderColor: '#4285F4',
-            outline: '2px solid #4285F4',
+            borderColor: '#428C5C',
+            outline: '1px solid #428C5C',
           },
           '&::before': {
             display: 'none',
@@ -37,12 +38,12 @@ export const InputText = ({ label, value }: InputTextProps) => {
             display: 'none',
           },
           '&.Mui-disabled': {
-            color: '#f2f2f2',
-            '-webkit-text-fill-color': '#f2f2f2',
+            color: '#2e2e2e',
+            '-webkit-text-fill-color': '#2e2e2e',
           },
         }}
         inputProps={{
-          style: { color: '#f2f2f2' }, // Garante que a cor do texto seja aplicada
+          style: { color: '#2e2e2e' }, // Garante que a cor do texto seja aplicada
         }}
         value={value}
       />

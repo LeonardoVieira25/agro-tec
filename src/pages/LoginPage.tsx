@@ -21,7 +21,7 @@ export default function LoginPage() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          backgroundColor: '#323238',
+          backgroundColor: '#f4f4f4',
           borderRadius: '6px',
         }}
       >
@@ -34,13 +34,13 @@ export default function LoginPage() {
                 fontSize: '18px',
               }}
             >
-              Seja bem-vindo(a) ao Open Class, você já esstá conectado em nossa
+              Seja bem-vindo(a) ao Agro Tech, você já esstá conectado em nossa
               plataforma, vá para a home para acessar as publicações
             </Typography>
             <Link
               to="/"
               style={{
-                color: '#405DE6',
+                color: '#56A66A',
                 marginTop: '1rem',
                 fontSize: '18px',
                 fontWeight: 'semibold',
@@ -60,7 +60,7 @@ export default function LoginPage() {
                 fontSize: '18px',
               }}
             >
-              Seja bem-vindo(a) ao Open Class, realize seu login ou faça seu
+              Seja bem-vindo(a) ao Agro Tech, realize seu login ou faça seu
               cadastro para acessar as publicações
             </Typography>
             <Button
@@ -72,7 +72,7 @@ export default function LoginPage() {
                 width: '100%',
                 height: '46px',
                 marginTop: '2rem',
-                backgroundColor: '#4285F4',
+                backgroundColor: '#56A66A',
                 color: '#f1f1f1',
                 borderRadius: '6px',
                 fontSize: '18px',
@@ -82,7 +82,7 @@ export default function LoginPage() {
                 transition: 'all ease-in-out 0.3s',
                 '&:hover': {
                   filter: 'brightness(0.9)',
-                  backgroundColor: '#4285F4',
+                  backgroundColor: '#56A66A',
                 },
               }}
             >

@@ -89,7 +89,7 @@ export default function CourseSubmitting() {
         variant="h3"
         sx={{ fontSize: '1.25rem', fontWeight: '600', mt: 5, mb: 3 }}
       >
-        Não encontrou seu discussão?
+        Não encontrou sua área de discussão?
       </Typography>
       <Button
         onClick={() => {
@@ -138,8 +138,8 @@ function CourseSubmitPopUp({
             flexDirection: 'column',
             gap: 2,
             p: 4,
-            background: '#2E2E2E',
-            color: '#f2f2f2',
+            background: '#f4f4f4',
+            color: '#2E2E2E',
             minWidth: '400px',
           }}
         >
@@ -170,24 +170,24 @@ function CourseSubmitPopUp({
                 }
                 sx={{
                   borderRadius: '6px',
-                  color: '#f2f2f2',
+                  color: '#2e2e2e',
                   label: {
-                    color: '#f2f2f2',
+                    color: '#428C5C',
                   },
                   input: {
-                    color: '#f2f2f2',
+                    color: '#2e2e2e',
                   },
                   fieldset: {
                     borderRadius: '6px',
-                    borderColor: '#f2f2f2',
+                    borderColor: '#428C5C',
                   },
                   '&.Mui-focused': {
-                    borderColor: '#4285F4',
-                    outline: '2px solid #4285F4',
+                    borderColor: '#428C5C',
+                    outline: '2px solid #428C5C',
                   },
                   '&:hover': {
                     fieldset: {
-                      borderColor: '#4285F4',
+                      borderColor: '#428C5C',
                     },
                   },
                 }}
@@ -199,24 +199,24 @@ function CourseSubmitPopUp({
                 }
                 sx={{
                   borderRadius: '6px',
-                  color: '#f2f2f2',
+                  color: '#2e2e2e',
                   label: {
-                    color: '#f2f2f2',
+                    color: '#428C5C',
                   },
                   input: {
-                    color: '#f2f2f2',
+                    color: '#2e2e2e',
                   },
                   fieldset: {
                     borderRadius: '6px',
-                    borderColor: '#f2f2f2',
+                    borderColor: '#428C5C',
                   },
                   '&.Mui-focused': {
-                    borderColor: '#4285F4',
-                    outline: '2px solid #4285F4',
+                    borderColor: '#428C5C',
+                    outline: '2px solid #428C5C',
                   },
                   '&:hover': {
                     fieldset: {
-                      borderColor: '#4285F4',
+                      borderColor: '#428C5C',
                     },
                   },
                 }}

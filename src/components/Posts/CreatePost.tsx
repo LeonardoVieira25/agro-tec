@@ -27,7 +27,7 @@ export const CreatePost = ({ parentPostId }: CreatePostProps) => {
         display: 'flex',
         flexDirection: 'column',
         w: '100%',
-        bgcolor: '#2E2E2E',
+        bgcolor: '#f4f4f4',
         p: '1.75rem',
         borderRadius: '6px',
       }}
@@ -40,17 +40,17 @@ export const CreatePost = ({ parentPostId }: CreatePostProps) => {
         placeholder="O que você deseja compartilhar?"
         aria-label="Make Post"
         sx={{
-          bgcolor: '#1E1E1E',
+          bgcolor: '#f4f4f4',
           borderRadius: '6px',
-          color: '#F2F2F2',
-          border: '1px solid #1E1E1E',
+          color: '#2e2e2e',
+          border: '1px solid #f4f4f4',
           p: '0.5rem',
           mb: '0.5rem',
           fontSize: '0.75rem',
           fontWeight: 'regular',
           '&.Mui-focused': {
-            borderColor: '#4285F4',
-            outline: '2px solid #4285F4',
+            borderColor: '#428C5C',
+            outline: '2px solid #428C5C',
           },
           '&::before': {
             display: 'none',

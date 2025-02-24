@@ -5,12 +5,12 @@ import {
   CardActions,
   IconButton,
   Typography,
-} from "@mui/material";
-import { serverTimestamp } from "firebase/firestore";
-import React, { useEffect } from "react";
-import useInteractions from "../hooks/useInteractions";
-import { useUserData } from "../hooks/useUserData";
-import { Post } from "../types/post";
+} from '@mui/material';
+import { serverTimestamp } from 'firebase/firestore';
+import React, { useEffect } from 'react';
+import useInteractions from '../hooks/useInteractions';
+import { useUserData } from '../hooks/useUserData';
+import { Post } from '../types/post';
 
 export default function PostCard({
   post,
@@ -30,8 +30,8 @@ export default function PostCard({
     if (setScore) {
       setScore(
         post.doc.id,
-        (interactions?.filter((i) => i.type === "like").length || 0) -
-          (interactions?.filter((i) => i.type === "dislike").length || 0)
+        (interactions?.filter((i) => i.type === 'like').length || 0) -
+          (interactions?.filter((i) => i.type === 'dislike').length || 0)
       );
     }
   }, [interactions]);
@@ -45,13 +45,13 @@ export default function PostCard({
     const diffDays = Math.floor(diffHours / 24);
 
     if (diffDays >= 1) {
-      return `há ${diffDays} dia${diffDays > 1 ? "s" : ""}`;
+      return `há ${diffDays} dia${diffDays > 1 ? 's' : ''}`;
     } else if (diffHours >= 1) {
-      return `há ${diffHours} hora${diffHours > 1 ? "s" : ""}`;
+      return `há ${diffHours} hora${diffHours > 1 ? 's' : ''}`;
     } else if (diffMin >= 1) {
-      return `há ${diffMin} minuto${diffMin > 1 ? "s" : ""}`;
+      return `há ${diffMin} minuto${diffMin > 1 ? 's' : ''}`;
     } else {
-      return "agora mesmo";
+      return 'agora mesmo';
     }
   }
 
@@ -59,53 +59,53 @@ export default function PostCard({
     <Card
       key={post.doc.id}
       sx={{
-        background: "#2E2E2E",
-        p: "1.25rem",
-        pb: "2.5rem",
-        borderRadius: "6px",
-        color: "#f2f2f2",
-        display: "flex",
-        flexDirection: "column",
+        background: '#f4f4f4',
+        p: '1.25rem',
+        pb: '2.5rem',
+        borderRadius: '6px',
+        color: '#2e2e2e',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "row",
-          gap: "1rem",
-          justifyContent: "space-between",
+          display: 'flex',
+          flexDirection: 'row',
+          gap: '1rem',
+          justifyContent: 'space-between',
         }}
       >
-        <Box sx={{ display: "flex", flexDirection: "row", gap: "0.75rem" }}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '0.75rem' }}>
           <Avatar
-            alt={"User Avatar"}
+            alt={'User Avatar'}
             src={
               post.userProfilePictureSrc
                 ? post.userProfilePictureSrc
-                : "user.png"
+                : 'user.png'
             }
             sx={{
-              width: "45px",
-              height: "45px",
-              border: "2px solid #405DE6",
+              width: '45px',
+              height: '45px',
+              border: '2px solid #405DE6',
             }}
           />
           <Typography
-            sx={{ fontWeight: "400", fontSize: "1rem", mt: "0.5rem" }}
+            sx={{ fontWeight: '400', fontSize: '1rem', mt: '0.5rem' }}
           >
-            {post.userName || "Anônimo"}
+            {post.userName || 'Anônimo'}
           </Typography>
         </Box>
-        <Typography sx={{ fontWeight: "400", fontSize: "0.875rem" }}>
+        <Typography sx={{ fontWeight: '400', fontSize: '0.875rem' }}>
           {timeAgo(new Date())}
         </Typography>
       </Box>
       <Typography
         sx={{
-          fontSize: "0.875rem",
-          fontWeight: " 400",
+          fontSize: '0.875rem',
+          fontWeight: ' 400',
           mt: 2,
-          wordBreak: "break-word",
+          wordBreak: 'break-word',
         }}
       >
         {post.text}
@@ -120,8 +120,11 @@ export default function PostCard({
             addInteraction(
               {
                 type: interactions?.some(
-                  (i) => i.type === "like" && i.docId === userData?.firebaseData?.uid
-                ) ? "none" : "like",
+                  (i) =>
+                    i.type === 'like' && i.docId === userData?.firebaseData?.uid
+                )
+                  ? 'none'
+                  : 'like',
                 createdAt: serverTimestamp(),
               },
               post,
@@ -130,7 +133,7 @@ export default function PostCard({
           }
         >
           {interactions?.some(
-            (i) => i.type === "like" && i.docId === userData?.firebaseData?.uid
+            (i) => i.type === 'like' && i.docId === userData?.firebaseData?.uid
           ) ? (
             <svg
               width="24"
@@ -168,8 +171,8 @@ export default function PostCard({
               />
             </svg>
           )}
-          <Typography style={{ marginLeft: "0.5rem", color: "#f2f2f2" }}>
-            {interactions?.filter((i) => i.type === "like").length}
+          <Typography style={{ marginLeft: '0.5rem', color: '#f2f2f2' }}>
+            {interactions?.filter((i) => i.type === 'like').length}
           </Typography>
         </IconButton>
 
@@ -179,11 +182,11 @@ export default function PostCard({
               {
                 type: interactions?.some(
                   (i) =>
-                    i.type === "dislike" &&
+                    i.type === 'dislike' &&
                     i.docId === userData?.firebaseData?.uid
                 )
-                  ? "none"
-                  : "dislike",
+                  ? 'none'
+                  : 'dislike',
                 createdAt: serverTimestamp(),
               },
               post,
@@ -193,7 +196,7 @@ export default function PostCard({
         >
           {interactions?.some(
             (i) =>
-              i.type === "dislike" && i.docId === userData?.firebaseData?.uid
+              i.type === 'dislike' && i.docId === userData?.firebaseData?.uid
           ) ? (
             <svg
               width="24"
