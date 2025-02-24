@@ -1,30 +1,30 @@
-import React from "react";
-import { Download, Upload, Calculator, BarChart } from "lucide-react";
-import { Box, Button, Typography, IconButton } from "@mui/material";
+import React from 'react';
+import { Download, Upload, Calculator, BarChart } from 'lucide-react';
+import { Box, Button, Typography, IconButton } from '@mui/material';
 
 export default function StepGuide() {
   return (
     <Box
       sx={{
-        minHeight: "100vh",
-        backgroundColor: "white",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
+        minHeight: '100vh',
+        backgroundColor: 'white',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
         px: 4,
         py: 8,
       }}
     >
       {/* Header */}
-      <Box sx={{ textAlign: "center", mb: 8 }}>
+      <Box sx={{ textAlign: 'center', mb: 8 }}>
         <Typography
           variant="h5"
           sx={{
-            color: "#428C5C",
-            fontWeight: "medium",
+            color: '#428C5C',
+            fontWeight: 'medium',
             maxWidth: 528,
             border: 2,
-            borderColor: "#428C5C",
+            borderColor: '#428C5C',
             borderRadius: 1,
             py: 2,
             px: 4,
@@ -35,7 +35,16 @@ export default function StepGuide() {
       </Box>
 
       {/* Steps */}
-      <Box sx={{ maxWidth: 400, width: "100%", mb: 8 }}>
+      <Box
+        sx={{
+          maxWidth: 400,
+          width: '100%',
+          mb: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 7,
+        }}
+      >
         <Step
           number={1}
           title="Realize o download da planilha modelo em formato CSV"
@@ -45,6 +54,7 @@ export default function StepGuide() {
           number={2}
           title="Preencha a planilha com as informações de suas terras"
           icon={<Upload />}
+          inverted
         />
         <Step
           number={3}
@@ -55,6 +65,7 @@ export default function StepGuide() {
           number={4}
           title="Adicione as métricas para o cálculo dos dados"
           icon={<Calculator />}
+          inverted
         />
         <Step
           number={5}
@@ -67,9 +78,9 @@ export default function StepGuide() {
       <Button
         variant="contained"
         sx={{
-          backgroundColor: "#428C5C",
-          "&:hover": { backgroundColor: "#277357" },
-          color: "white",
+          backgroundColor: '#428C5C',
+          '&:hover': { backgroundColor: '#277357' },
+          color: 'white',
           px: 8,
         }}
         href="/analysisform"
@@ -80,15 +91,15 @@ export default function StepGuide() {
       {/* Bottom Toolbar */}
       <Box
         sx={{
-          position: "fixed",
+          position: 'fixed',
           bottom: 0,
           left: 0,
           right: 0,
-          backgroundColor: "gray",
-          color: "white",
+          backgroundColor: 'gray',
+          color: 'white',
           p: 3,
-          display: "flex",
-          justifyContent: "center",
+          display: 'none',
+          justifyContent: 'center',
           gap: 2,
         }}
       >
@@ -104,33 +115,56 @@ export default function StepGuide() {
 function Step({
   number,
   title,
-  icon,
+  inverted = false,
 }: {
   number: number;
   title: string;
   icon: React.ReactNode;
+  inverted?: boolean;
 }) {
   return (
-    <Box sx={{ display: "flex", alignItems: "start", gap: 2, mb: 2 }}>
-      <Box
-        sx={{
-          flexShrink: 0,
-          width: 32,
-          height: 32,
-          borderRadius: "50%",
-          backgroundColor: "#428C5C",
-          color: "white",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {number}
-      </Box>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'start',
+        gap: 5,
+        flexDirection: inverted ? 'row-reverse' : 'row',
+      }}
+    >
+      <img src={`/${number}.svg`} alt={`Step ${number}`} />
       <Box sx={{ flex: 1 }}>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          {icon}
-          <Typography sx={{ color: "gray" }}>{title}</Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: number == 1 ? 'flex-end' : 'start',
+            gap: 1,
+          }}
+        >
+          <Typography
+            sx={{
+              color: '#000',
+              fontSize: '20px',
+              fontWeight: '600',
+              textAlign: inverted ? 'left' : 'right',
+            }}
+          >
+            {title}
+          </Typography>
+          {number == 1 && (
+            <a
+              href="/dataset.csv"
+              style={{
+                color: '#277357',
+                textDecoration: 'underline',
+                fontWeight: 'semibold',
+                fontFamily: 'Inter',
+                textAlign: 'right',
+              }}
+            >
+              disponível aqui
+            </a>
+          )}
         </Box>
       </Box>
     </Box>
@@ -140,7 +174,7 @@ function Step({
 function ToolbarIcon({ icon }: { icon: React.ReactNode }) {
   return (
     <IconButton
-      sx={{ p: 2, "&:hover": { backgroundColor: "darkgray" }, borderRadius: 1 }}
+      sx={{ p: 2, '&:hover': { backgroundColor: 'darkgray' }, borderRadius: 1 }}
     >
       {icon}
     </IconButton>
