@@ -20,9 +20,7 @@ import { getUniversityNameByCode } from '../utils/university';
 import { useLoadingContext } from '../context/loadingContext';
 
 export default function AdminPage() {
-  const {
-    useAdmin: useAdminLoading,
-  } = useLoadingContext();
+  const { useAdmin: useAdminLoading } = useLoadingContext();
   const adminHook = useAdmin();
   const {
     isAdmin,
@@ -34,7 +32,7 @@ export default function AdminPage() {
 
   const [selectedUniversity, setSelectedUniversity] = useState<University>();
 
-  if(useAdminLoading.getIsAdmin) {
+  if (useAdminLoading.getIsAdmin) {
     return (
       <Layout>
         <Box
@@ -107,7 +105,7 @@ export default function AdminPage() {
         >
           <Box
             sx={{
-              background: '#2E2E2E',
+              background: '#f4f4f4',
               p: '1rem',
               borderRadius: '6px',
               maxWidth: '50%',
@@ -123,7 +121,7 @@ export default function AdminPage() {
                 textAlign: 'center',
               }}
             >
-              Cursos submetidos para aprovação
+              Áreas de discussão submetidas para aprovação
             </Typography>
             {submittedCourses.length > 0 ? (
               <>
@@ -137,7 +135,7 @@ export default function AdminPage() {
                   {submittedCourses.map((discussion) => (
                     <Card
                       key={discussion.code}
-                      sx={{ backgroundColor: '#1E1E1E', color: '#f2f2f2' }}
+                      sx={{ backgroundColor: '#ccc', color: '#2e2e2e' }}
                     >
                       <CardHeader title={discussion.nome} />
                       <CardContent>
@@ -152,7 +150,7 @@ export default function AdminPage() {
                         <Typography
                           sx={{
                             fontSize: '1rem',
-                            color: '#ccc',
+                            color: '#2e2e2e',
                           }}
                         >
                           {discussion.code}
@@ -194,7 +192,7 @@ export default function AdminPage() {
           </Box>
           <Box
             sx={{
-              background: '#2E2E2E',
+              background: '#f4f4f4',
               p: '1rem',
               borderRadius: '6px',
               maxWidth: '50%',
@@ -256,7 +254,9 @@ function UniversityScreen({
   const [selectedCourse, setSelectedDiscussion] = useState<Discussion>();
 
   useEffect(() => {
-    getDiscussions(selectedUniversity.name).then((discussions) => setCourses(discussions));
+    getDiscussions(selectedUniversity.name).then((discussions) =>
+      setCourses(discussions)
+    );
   }, [selectedUniversity]);
 
   if (selectedCourse) {
@@ -330,8 +330,8 @@ function UniversityScreen({
                   color="error"
                   onClick={() =>
                     deleteCourse(discussion).then(() =>
-                      getDiscussions(selectedUniversity.name).then((discussions) =>
-                        setCourses(discussions)
+                      getDiscussions(selectedUniversity.name).then(
+                        (discussions) => setCourses(discussions)
                       )
                     )
                   }
