@@ -1,9 +1,8 @@
 import { collection, doc, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
-import { InteractionType, Post } from "../types/post";
-import { getUniversityCode } from "../utils/university";
-import { useUserData } from "./useUserData";
-import { db } from "../firebase/init";
 import { useEffect, useState } from "react";
+import { db } from "../firebase/init";
+import { InteractionType, Post } from "../types/post";
+import { useUserData } from "./useUserData";
 
 
 
@@ -15,23 +14,14 @@ export default function useInteractions(post: Post) {
 
 
     useEffect(() => {
-        const universityCode =
-            userData?.firebaseData && getUniversityCode(userData.firebaseData);
 
-        if (!universityCode) {
-            console.log("No university code found");
-            return;
-        }
-
-        if (!userData.discussionCode) {
+        if (!userData || !userData.discussionCode) {
             console.log("No discussion code found");
             return;
         }
 
         const postsCollection = collection(
             db,
-            "university",
-            universityCode,
             "discussions",
             userData.discussionCode,
             "posts"
@@ -58,15 +48,7 @@ export default function useInteractions(post: Post) {
 
 
     async function addInteraction(interaction: InteractionType, post: Post, parentPostId?: string) {
-        const universityCode =
-            userData?.firebaseData && getUniversityCode(userData.firebaseData);
-
-        if (!universityCode) {
-            console.log("No university code found");
-            return;
-        }
-
-        if (!userData.discussionCode) {
+        if (!userData || !userData.discussionCode) {
             console.log("No discussion code found");
             return;
         }
@@ -81,16 +63,12 @@ export default function useInteractions(post: Post) {
         const postsCollection = !parentPostId
             ? collection(
                 db,
-                "university",
-                universityCode,
                 "discussions",
                 userData.discussionCode,
                 "posts"
             )
             : collection(
                 db,
-                "university",
-                universityCode,
                 "discussions",
                 userData.discussionCode,
                 "posts",

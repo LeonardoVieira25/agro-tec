@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useBetween } from 'use-between';
 import { db } from '../firebase/init';
 import { Discussion } from '../types/discussion';
-import { getUniversityCode } from '../utils/university';
 import useFirebaseAuth from './useFirebaseAuth';
 import { useUserData } from './useUserData';
 
@@ -38,8 +37,8 @@ export default function useDiscussions() {
   }, [user])
 
 
-  async function getDiscussions(universityCode: string) {
-    const q = query(collection(db, "university", universityCode, "discussions"));
+  async function getDiscussions() {
+    const q = query(collection(db, "discussions"));
     const querySnapshot = await getDocs(q);
     const discussions: Discussion[] = [];
     querySnapshot.forEach((doc) => {
@@ -54,8 +53,7 @@ export default function useDiscussions() {
       setUserDiscussions([]);
       return [];
     }
-    const universityCode = getUniversityCode(user);
-    const userCourses = await getDiscussions(universityCode);
+    const userCourses = await getDiscussions();
     setUserDiscussions(userCourses);
     return userCourses;
   }
@@ -65,9 +63,8 @@ export default function useDiscussions() {
       return null;
     }
 
-    const universityCode = getUniversityCode(user);
     const discussionDoc = await getDoc(
-      doc(db, 'university', universityCode, 'discussions', userData.discussionCode)
+      doc(db, 'discussions', userData.discussionCode)
     );
     if (!discussionDoc.exists()) {
       console.error('Course not found');

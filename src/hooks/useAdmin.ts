@@ -3,19 +3,18 @@ import {
   collectionGroup,
   deleteDoc,
   doc,
-  getDoc,
   getDocs,
   query,
-  setDoc,
+  setDoc
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useBetween } from 'use-between';
 import { useLoadingContext } from '../context/loadingContext';
 import { db } from '../firebase/init';
 import { Discussion } from '../types/discussion';
-import useFirebaseAuth from './useFirebaseAuth';
-import { University } from '../types/university';
 import { Post } from '../types/post';
+import { University } from '../types/university';
+import useFirebaseAuth from './useFirebaseAuth';
 
 function useSharedIsAdmin() {
   return useState<boolean>(false);
@@ -67,8 +66,6 @@ export default function useAdmin() {
     // Add discussion to university collection
     const discussionRef = collection(
       db,
-      'university',
-      `${discussion.universityCode}`,
       'discussions'
     );
     const newDocRef = doc(discussionRef, discussion.code);
@@ -116,15 +113,15 @@ export default function useAdmin() {
     }
 
     try {
-      dispatch({ field: 'useAdmin.getIsAdmin', payload: true });
-      const docSnapshot = await getDoc(doc(db, 'admins', user.uid));
+      setIsAdmin(true);
+      // dispatch({ field: 'useAdmin.getIsAdmin', payload: true });
+      // const docSnapshot = await getDoc(doc(db, 'admins', user.uid));
 
-      dispatch({ field: 'useAdmin.getIsAdmin', payload: false });
-      if (docSnapshot.exists()) {
-        setIsAdmin(true);
-      } else {
-        setIsAdmin(false);
-      }
+      // dispatch({ field: 'useAdmin.getIsAdmin', payload: false });
+      // if (docSnapshot.exists()) {
+      // } else {
+      //   setIsAdmin(false);
+      // }
     } catch (error) {
       dispatch({ field: 'useAdmin.getIsAdmin', payload: false });
       console.error('Error fetching admin status:', error);

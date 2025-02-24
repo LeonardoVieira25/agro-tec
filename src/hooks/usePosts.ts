@@ -9,10 +9,9 @@ import {
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from '../firebase/init';
-import useDiscussions from './useDiscussion';
 import { useUserData } from '../hooks/useUserData';
 import { Post } from '../types/post';
-import { getUniversityCode } from '../utils/university';
+import useDiscussions from './useDiscussion';
 
 export default function usePosts(
   parentPostId?: string,
@@ -20,18 +19,10 @@ export default function usePosts(
   discussionCodeParam?: string
 ) {
   const { userData } = useUserData();
-  const { userCourse } = useDiscussions();
+  const { userDiscussion } = useDiscussions();
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    const universityCode =
-      universityCodeParam ||
-      (userData?.firebaseData && getUniversityCode(userData.firebaseData));
-
-    if (!universityCode) {
-      return;
-    }
-
     const discussionCode = discussionCodeParam || userData?.discussionCode;
     if (!discussionCode) {
       console.log('No discussion code found');
@@ -41,23 +32,19 @@ export default function usePosts(
     const q = query(
       !parentPostId
         ? collection(
-            db,
-            'university',
-            universityCode,
-            'discussions',
-            discussionCode,
-            'posts'
-          )
+          db,
+          'discussions',
+          discussionCode,
+          'posts'
+        )
         : collection(
-            db,
-            'university',
-            universityCode,
-            'discussions',
-            discussionCode,
-            'posts',
-            parentPostId,
-            'replies'
-          )
+          db,
+          'discussions',
+          discussionCode,
+          'posts',
+          parentPostId,
+          'replies'
+        )
     );
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -83,14 +70,10 @@ export default function usePosts(
   }, [userData, parentPostId]);
 
   async function makePost(text: string) {
-    const universityCode =
-      userData?.firebaseData && getUniversityCode(userData.firebaseData);
-
-    if (!universityCode) {
-      console.log('No university code found');
-      return;
+    if (!userData) {
+      console.error("usuario not found")
+      return
     }
-
     if (!userData.discussionCode) {
       console.log('No discussion code found');
       return;
@@ -98,23 +81,19 @@ export default function usePosts(
 
     const postsCollection = !parentPostId
       ? collection(
-          db,
-          'university',
-          universityCode,
-          'discussions',
-          userData.discussionCode,
-          'posts'
-        )
+        db,
+        'discussions',
+        userData.discussionCode,
+        'posts'
+      )
       : collection(
-          db,
-          'university',
-          universityCode,
-          'discussions',
-          userData.discussionCode,
-          'posts',
-          parentPostId,
-          'replies'
-        );
+        db,
+        'discussions',
+        userData.discussionCode,
+        'posts',
+        parentPostId,
+        'replies'
+      );
 
     const newDoc = doc(postsCollection);
 
@@ -136,6 +115,6 @@ export default function usePosts(
   return {
     posts,
     makePost,
-    userCourse,
+    userDiscussion,
   };
 }

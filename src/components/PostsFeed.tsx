@@ -11,7 +11,7 @@ export default function PostsFeed({
   parentPostId?: string;
   actions?: ((Post: Post) => React.ReactNode)[];
 }) {
-  const { posts, userCourse } = usePosts(parentPostId);
+  const { posts, userDiscussion } = usePosts(parentPostId);
 
 
   const [withScores, setWithScores] = useState<{
@@ -52,7 +52,7 @@ export default function PostsFeed({
               textTransform: 'uppercase',
             }}
           >
-            {userCourse?.nome}
+            {userDiscussion?.nome}
           </Typography>
         </>
       )}
