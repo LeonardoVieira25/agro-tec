@@ -29,13 +29,13 @@ Siga os passos abaixo para configurar o ambiente de desenvolvimento:
 1. Clone o repositório:
 
    \`\`\`bash
-   git clone https://github.com/seu-usuario/OpenClass.git
+   git clone https://github.com/LeonardoVieira25/agro-tec.git
    \`\`\`
 
 2. Navegue até o diretório do projeto:
 
    \`\`\`bash
-   cd OpenClass
+   cd agro-tec
    \`\`\`
 
 3. Instale as dependências do projeto:
