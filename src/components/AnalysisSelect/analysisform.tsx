@@ -1,9 +1,9 @@
-"use client";
-import { Box, Button, Input, Typography } from "@mui/material";
-import { useState } from "react";
-import { NumberField } from "./NumberField";
-import { FormData as FormDataType, useAnalysisForm } from "./UseAnalysis/use-analysis-form";
-import { Upload, WindowRounded } from '@mui/icons-material';
+'use client';
+import { Box, Button, Input, Typography } from '@mui/material';
+import { NumberField } from './NumberField';
+import { useAnalysisForm } from './UseAnalysis/use-analysis-form';
+import { Upload } from '@mui/icons-material';
+import { useState } from 'react';
 
 export function AnalysisForm({
   onSubmitted
