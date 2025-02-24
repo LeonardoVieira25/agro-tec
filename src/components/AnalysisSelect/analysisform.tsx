@@ -7,6 +7,7 @@ import {
   FormData as FormDataType,
   useAnalysisForm,
 } from "./UseAnalysis/use-analysis-form";
+import AnalisePage from "../../pages/analise";
 
 export function AnalysisForm({
   onSubmitted,
@@ -16,6 +17,7 @@ export function AnalysisForm({
   const { formData, handleChange, handleSubmit } = useAnalysisForm();
   const [file, setFile] = useState<File | null>(null);
 
+  const [analiseData, setAnaliseData] = useState<any>();
   async function clickOnSubmit(e: React.FormEvent) {
     e.preventDefault();
     console.log(file);
@@ -51,10 +53,18 @@ export function AnalysisForm({
       }
 
       const result = await response.json();
-      onSubmitted(result);
+      // onSubmitted(result);
+
+      setAnaliseData(result);
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
     }
+  }
+
+  if (analiseData) {
+    return <AnalisePage
+    analiseData={analiseData}
+    />;
   }
 
   return (

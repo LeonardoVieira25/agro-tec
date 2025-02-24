@@ -36,7 +36,6 @@ function App() {
                 <Route path="/minhaconta" element={<MyAccount />} />
                 <Route path="/steps" element={<StepsPage />} />
                 <Route path="/analysisform" element={<Analysis />} />
-                <Route path="/analise" element={<AnalisePage />} />
               </Routes>
             </div>
           </Router>
