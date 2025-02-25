@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography } from "@mui/material";
 import {
   Bar,
   BarChart,
@@ -12,7 +12,8 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from 'recharts';
+} from "recharts";
+import { format } from "date-fns";
 
 export interface AnaliseDataType {
   temperatura: { [key: string]: number | null };
@@ -30,8 +31,8 @@ export interface AnaliseDataType {
 
 function AnaliseDataTypeToDta(data: AnaliseDataType) {
   if (!data.temperatura) return [];
-  
-  const timestamps = Object.keys(data.temperatura)
+
+  const timestamps = Object.keys(data.temperatura);
   const sortedTimestamps = timestamps.sort((a, b) => {
     const dateA = new Date(a);
     const dateB = new Date(b);
@@ -39,8 +40,7 @@ function AnaliseDataTypeToDta(data: AnaliseDataType) {
   });
 
   const dta = sortedTimestamps.map((timestamp) => {
-    const date = new Date(timestamp);
-
+    const date = new Date(Number(timestamp));
     const keys = Object.keys(data);
     const dateToReturn: any = [];
     keys.forEach((key) => {
@@ -54,7 +54,7 @@ function AnaliseDataTypeToDta(data: AnaliseDataType) {
 }
 
 function numberFormatter(value: number) {
-  return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
 function ResumoAnalise({ analiseData }: { analiseData: AnaliseDataType }) {
@@ -81,12 +81,12 @@ function ResumoAnalise({ analiseData }: { analiseData: AnaliseDataType }) {
       sx={{
         my: 4,
         p: 3,
-        border: '1px solid #ddd',
+        border: "1px solid #ddd",
         borderRadius: 2,
-        backgroundColor: '#f9f9f9',
+        backgroundColor: "#f9f9f9",
       }}
     >
-      <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+      <Typography variant="h6" sx={{ fontWeight: "bold" }}>
         Resumo da Análise
       </Typography>
       <Typography>Temperatura Média: {temperaturaMedia}°C</Typography>
@@ -104,31 +104,31 @@ function ConclusaoAnalise({ analiseData }: { analiseData: AnaliseDataType }) {
       sx={{
         my: 4,
         p: 3,
-        border: '1px solid #ddd',
+        border: "1px solid #ddd",
         borderRadius: 2,
-        backgroundColor: '#f9f9f9',
+        backgroundColor: "#f9f9f9",
       }}
     >
-      <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+      <Typography variant="h6" sx={{ fontWeight: "bold" }}>
         Conclusão da Análise
       </Typography>
       <Typography>
         A análise dos dados coletados revela padrões importantes para o manejo
-        da plantação. A temperatura média registrada foi de{' '}
+        da plantação. A temperatura média registrada foi de{" "}
         {data.reduce((sum, item) => sum + (item?.temperatura || 0), 0) /
           data.length}
-        °C, enquanto a precipitação total acumulada no período foi de{' '}
+        °C, enquanto a precipitação total acumulada no período foi de{" "}
         {data.reduce((sum, item) => sum + (item?.precipitacao || 0), 0)} mm.
         Esses fatores influenciam diretamente a evapotranspiração, que
-        apresentou valores médios de{' '}
+        apresentou valores médios de{" "}
         {data.reduce((sum, item) => sum + (item?.evapotranspiracao || 0), 0) /
-          data.length}{' '}
+          data.length}{" "}
         mm, impactando a disponibilidade hídrica para as culturas.
       </Typography>
       <Typography>
         O déficit hídrico observado indica a necessidade de estratégias de
         irrigação para evitar prejuízos na produção. Além disso, o custo total
-        estimado para as operações no período foi de{' '}
+        estimado para as operações no período foi de{" "}
         {numberFormatter(
           data.reduce((sum, item) => sum + (item?.custo || 0), 0)
         )}
@@ -142,14 +142,14 @@ function ConclusaoAnalise({ analiseData }: { analiseData: AnaliseDataType }) {
 function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
   const data = AnaliseDataTypeToDta(analiseData);
   return (
-    <Box sx={{ py: 10, width: '100%', px: 3, fontFamily: 'Inter' }}>
+    <Box sx={{ py: 10, width: "100%", px: 3, fontFamily: "Inter" }}>
       <Typography
         variant="h1"
         sx={{
-          fontSize: '24px',
-          color: '#1e1e1e',
-          fontWeight: '600',
-          textAlign: 'left',
+          fontSize: "24px",
+          color: "#1e1e1e",
+          fontWeight: "600",
+          textAlign: "left",
           mb: 5,
         }}
       >
@@ -161,55 +161,81 @@ function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
       {/* Gráficos superiores (3 em linha) */}
       <Box
         sx={{
-          display: 'flex',
+          display: "flex",
           gap: 3,
-          justifyContent: 'space-between',
+          justifyContent: "space-between",
           mb: 4,
         }}
       >
-        <Box sx={{ width: '33%' }}>
-          <Typography sx={{ textAlign: 'left', mb: 2 }}>
+        <Box sx={{ width: "33%" }}>
+          <Typography sx={{ textAlign: "left", mb: 2 }}>
             Temperatura e Precipitação
           </Typography>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="data" />
+              <XAxis
+                dataKey="date"
+                interval={"equidistantPreserveStart"}
+                dy={5}
+                minTickGap={20}
+                tickFormatter={(value) => format(value, "MM/yyyy")}
+              />
               <YAxis />
-              <Tooltip />
+              <Tooltip 
+                labelFormatter={(value) => format(value, "dd/MM/yyyy")}
+              />
               <Legend />
               <Line type="monotone" dataKey="temperatura" stroke="#ff7300" />
               <Line type="monotone" dataKey="precipitacao" stroke="#387908" />
             </LineChart>
           </ResponsiveContainer>
         </Box>
-        <Box sx={{ width: '33%' }}>
-          <Typography sx={{ textAlign: 'left', mb: 2 }}>
+        <Box sx={{ width: "33%" }}>
+          <Typography sx={{ textAlign: "left", mb: 2 }}>
             Déficit Hídrico
           </Typography>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="data" />
+              <XAxis
+                dataKey="date"
+                interval={"equidistantPreserveStart"}
+                dy={5}
+                minTickGap={20}
+                tickFormatter={(value) => format(value, "MM/yyyy")}
+              />
+
               <YAxis />
-              <Tooltip />
+              <Tooltip 
+                labelFormatter={(value) => format(value, "dd/MM/yyyy")}
+              />
               <Legend />
               <Bar dataKey="deficitHidrico" fill="#8884d8" />
             </BarChart>
           </ResponsiveContainer>
         </Box>
 
-        <Box sx={{ width: '33%' }}>
-          <Typography sx={{ textAlign: 'left', mb: 2 }}>
+        <Box sx={{ width: "33%" }}>
+          <Typography sx={{ textAlign: "left", mb: 2 }}>
             Custo de Produção
           </Typography>
 
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="data" />
+              <XAxis
+                dataKey="date"
+                interval={"equidistantPreserveStart"}
+                dy={5}
+                minTickGap={20}
+                tickFormatter={(value) => format(value, "MM/yyyy")}
+              />
+
               <YAxis />
-              <Tooltip />
+              <Tooltip 
+                labelFormatter={(value) => format(value, "dd/MM/yyyy")}
+              />
               <Legend />
               <Line type="monotone" dataKey="custo" stroke="#ff7300" />
             </LineChart>
@@ -223,15 +249,17 @@ function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
                   fill="#82ca9d"
                   label
                 />
-                <Tooltip />
+                <Tooltip 
+                labelFormatter={(value) => format(value, "dd/MM/yyyy")}
+              />
               </PieChart> */}
         </Box>
       </Box>
 
       {/* Gráficos inferiores (2 em grid) */}
-      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3 }}>
-        <Box sx={{ width: '100%' }}>
-          <Typography sx={{ textAlign: 'left', mb: 2 }}>
+      <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 3 }}>
+        <Box sx={{ width: "100%" }}>
+          <Typography sx={{ textAlign: "left", mb: 2 }}>
             Temperatura e Precipitação
           </Typography>
           <ResponsiveContainer width="100%" height={300}>
@@ -239,20 +267,20 @@ function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
               <CartesianGrid />
               <XAxis dataKey="temperatura" name="Temperatura" />
               <YAxis dataKey="precipitacao" name="Precipitação" />
-              <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+              <Tooltip cursor={{ strokeDasharray: "3 3" }} />
               <Scatter name="Clima" data={data} fill="#ff7300" />
             </ScatterChart>
           </ResponsiveContainer>
         </Box>
 
-        <Box sx={{ width: '100%' }}>
-          <Typography sx={{ textAlign: 'left', mb: 2 }}>
+        <Box sx={{ width: "100%" }}>
+          <Typography sx={{ textAlign: "left", mb: 2 }}>
             Evapotranspiração
           </Typography>
 
           {/* <RadarChart data={data} outerRadius={90}>
                 <PolarGrid />
-                <PolarAngleAxis dataKey="data" />
+                <PolarAngleAxis dataKey="date" />
                 <PolarRadiusAxis />
                 <Radar
                   name="Evapotranspiração"
@@ -261,14 +289,25 @@ function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
                   fill="#8884d8"
                   fillOpacity={0.6}
                 />
-                <Tooltip />
+                <Tooltip 
+                labelFormatter={(value) => format(value, "dd/MM/yyyy")}
+              />
               </RadarChart> */}
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="data" />
+              <XAxis
+                dataKey="date"
+                interval={"equidistantPreserveStart"}
+                dy={5}
+                minTickGap={20}
+                tickFormatter={(value) => format(value, "MM/yyyy")}
+              />
+
               <YAxis />
-              <Tooltip />
+              <Tooltip 
+                labelFormatter={(value) => format(value, "dd/MM/yyyy")}
+              />
               <Legend />
               <Line
                 type="monotone"
@@ -279,16 +318,25 @@ function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
           </ResponsiveContainer>
         </Box>
       </Box>
-      <Box sx={{ width: '100%', mt: 5 }}>
-        <Typography sx={{ textAlign: 'left', mb: 2 }}>
+      <Box sx={{ width: "100%", mt: 5 }}>
+        <Typography sx={{ textAlign: "left", mb: 2 }}>
           Custo de Produção x Temperatura
         </Typography>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="data" />
+            <XAxis
+                dataKey="date"
+                interval={"equidistantPreserveStart"}
+                dy={5}
+                minTickGap={20}
+                tickFormatter={(value) => format(value, "MM/yyyy")}
+              />
+
             <YAxis />
-            <Tooltip />
+            <Tooltip 
+                labelFormatter={(value) => format(value, "dd/MM/yyyy")}
+              />
             <Legend />
             <Line type="monotone" dataKey="temperatura" stroke="#ff7300" />
             <Line type="monotone" dataKey="custo" stroke="#ff73ff" />
@@ -315,9 +363,9 @@ function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
       <Button
         variant="contained"
         sx={{
-          backgroundColor: '#428C5C',
-          '&:hover': { backgroundColor: '#277357' },
-          color: 'white',
+          backgroundColor: "#428C5C",
+          "&:hover": { backgroundColor: "#277357" },
+          color: "white",
           px: 8,
           my: 5,
         }}
