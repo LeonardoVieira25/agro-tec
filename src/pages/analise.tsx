@@ -38,15 +38,18 @@ export interface AnaliseDataType {
 }
 
 function AnaliseDataTypeToDta(data: AnaliseDataType) {
-  const dta = Object.keys(data.temperatura).map((key) => {
-    return {
-      data: key,
-      temperatura: data.temperatura[key],
-      precipitacao: data.precipitacao[key],
-      evapotranspiracao: data.evapotranspiracao[key],
-      deficitHidrico: data.deficitHidrico[key],
-      custo: data.custo[key],
-    };
+  if (!data.temperatura) return [];
+  const dta = Object.keys(data.temperatura).map((timestamp) => {
+    const date = new Date(timestamp);
+
+    const keys = Object.keys(data);
+    const dateToReturn: any = [];
+    keys.forEach((key) => {
+      dateToReturn[key] = data[key][timestamp];
+    });
+    dateToReturn.date = date;
+
+    return dateToReturn;
   });
   return dta;
 }
@@ -95,19 +98,20 @@ function AnaliseDataTypeToDta(data: AnaliseDataType) {
 //   },
 // ];
 
-// const dataCost = [
-//   { temperatura: 25, custo: 25 },
-//   { temperatura: 28, custo: 30 },
-//   { temperatura: 30, custo: 40 },
-//   { temperatura: 32, custo: 35 },
-//   { temperatura: 29, custo: 20 },
-// ];
+const dataCost = [
+  { temperatura: 25, custo: 25 },
+  { temperatura: 28, custo: 30 },
+  { temperatura: 30, custo: 40 },
+  { temperatura: 32, custo: 35 },
+  { temperatura: 29, custo: 20 },
+];
 
 function numberFormatter(value: number) {
   return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
 function ResumoAnalise({ analiseData }: { analiseData: AnaliseDataType }) {
+  console.log(analiseData);
   const data = AnaliseDataTypeToDta(analiseData);
 
   const temperaturaMedia = (
@@ -255,7 +259,18 @@ function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
             </Typography>
 
             <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
+              <LineChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="data" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="date" stroke="#ff7300" />
+                <Line type="monotone" dataKey="custo" stroke="#ff7300" />
+              </LineChart>
+            </ResponsiveContainer>
+
+            {/* <PieChart>
                 <Pie
                   data={data}
                   dataKey="custo"
@@ -264,8 +279,7 @@ function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
                   label
                 />
                 <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
+              </PieChart> */}
           </Box>
         </Box>
 
@@ -291,8 +305,7 @@ function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
               Evapotranspiração
             </Typography>
 
-            <ResponsiveContainer width="100%" height={300}>
-              <RadarChart data={data} outerRadius={90}>
+            {/* <RadarChart data={data} outerRadius={90}>
                 <PolarGrid />
                 <PolarAngleAxis dataKey="data" />
                 <PolarRadiusAxis />
@@ -304,7 +317,21 @@ function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
                   fillOpacity={0.6}
                 />
                 <Tooltip />
-              </RadarChart>
+              </RadarChart> */}
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="data" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="date" stroke="#ff7300" />
+                <Line
+                  type="monotone"
+                  dataKey="evapotranspiracao"
+                  stroke="#ff7300"
+                />
+              </LineChart>
             </ResponsiveContainer>
           </Box>
         </Box>
@@ -313,6 +340,18 @@ function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
             Custo de Produção x Temperatura
           </Typography>
           <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="data" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="temperatura" stroke="#ff7300" />
+              <Line type="monotone" dataKey="custo" stroke="#ff7300" />
+            </LineChart>
+          </ResponsiveContainer>
+
+          {/* <ResponsiveContainer width="100%" height={300}>
             <ScatterChart>
               <CartesianGrid />
               <XAxis
@@ -325,10 +364,10 @@ function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
               <Tooltip cursor={{ strokeDasharray: "3 3" }} />
               <Scatter name="Análise" data={dataCost} fill="#8884d8" />
             </ScatterChart>
-          </ResponsiveContainer>
+          </ResponsiveContainer> */}
         </Box>
 
-        <ConclusaoAnalise />
+        <ConclusaoAnalise analiseData={analiseData} />
         <Button
           variant="contained"
           sx={{

@@ -55,6 +55,10 @@ export function AnalysisForm({
       const result = await response.json();
       // onSubmitted(result);
 
+      if (result.error) {
+        throw new Error("Network response was not ok");
+      }
+
       setAnaliseData(result);
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
@@ -62,9 +66,7 @@ export function AnalysisForm({
   }
 
   if (analiseData) {
-    return <AnalisePage
-    analiseData={analiseData}
-    />;
+    return <AnalisePage analiseData={analiseData} />;
   }
 
   return (
