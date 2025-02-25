@@ -1,14 +1,13 @@
 import { ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { LoadingContextProvider } from './context/loadingContext';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AdminPage from './pages/AdminPage';
+import Analysis from './pages/Analysis';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import AdminPage from './pages/AdminPage';
 import MyAccount from './pages/MyAccount';
 import StepsPage from './pages/StepsPage';
-import Analysis from './pages/Analysis';
-import AnalisePage from './pages/analise';
 const theme = createTheme({
   palette: {
     primary: {

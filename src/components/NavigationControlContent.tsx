@@ -17,7 +17,7 @@ export default function NavigationControlContent() {
 
   const { isAdmin } = useAdmin();
 
-  const { userCourse } = useDiscussions();
+  const { userDiscussion } = useDiscussions();
 
   return (
     <Box
@@ -28,9 +28,9 @@ export default function NavigationControlContent() {
       }}
     >
       <UserCard user={user} />
-      {userCourse ? (
+      {userDiscussion ? (
         <>
-          <DiscussionCard discussion={userCourse} />
+          <DiscussionCard discussion={userDiscussion} />
           <Button
             onClick={() =>
               setSelectedDiscussion(null).then(() => window.location.reload())

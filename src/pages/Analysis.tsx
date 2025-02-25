@@ -1,5 +1,4 @@
 import { AnalysisSelect } from '../components/AnalysisSelect';
-import Header from '../components/Header/Index';
 import Layout from '../components/Layout/Index';
 
 export default function Analysis() {

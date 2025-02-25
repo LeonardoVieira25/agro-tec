@@ -9,11 +9,7 @@ import {
 } from './UseAnalysis/use-analysis-form';
 import AnalisePage from '../../pages/analise';
 
-export function AnalysisForm({
-  onSubmitted,
-}: {
-  onSubmitted: (result: any) => any;
-}) {
+export function AnalysisForm() {
   const { formData, handleChange } = useAnalysisForm();
   const [file, setFile] = useState<File | null>(null);
 
