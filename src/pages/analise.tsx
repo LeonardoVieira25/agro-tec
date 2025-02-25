@@ -1,17 +1,17 @@
 import { Box, Button, Typography } from '@mui/material';
 import {
-  LineChart,
-  Line,
-  BarChart,
   Bar,
-  ScatterChart,
+  BarChart,
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
   Scatter,
+  ScatterChart,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
 } from 'recharts';
 
 export interface AnaliseDataType {
