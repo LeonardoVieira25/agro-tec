@@ -30,7 +30,15 @@ export interface AnaliseDataType {
 
 function AnaliseDataTypeToDta(data: AnaliseDataType) {
   if (!data.temperatura) return [];
-  const dta = Object.keys(data.temperatura).map((timestamp) => {
+  
+  const timestamps = Object.keys(data.temperatura)
+  const sortedTimestamps = timestamps.sort((a, b) => {
+    const dateA = new Date(a);
+    const dateB = new Date(b);
+    return dateA.getTime() - dateB.getTime();
+  });
+
+  const dta = sortedTimestamps.map((timestamp) => {
     const date = new Date(timestamp);
 
     const keys = Object.keys(data);
@@ -255,7 +263,6 @@ function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="date" stroke="#ff7300" />
               <Line type="monotone" dataKey="custo" stroke="#ff7300" />
             </LineChart>
           </ResponsiveContainer>
@@ -315,7 +322,6 @@ function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="date" stroke="#ff7300" />
               <Line
                 type="monotone"
                 dataKey="evapotranspiracao"
@@ -337,7 +343,7 @@ function AnalisePage({ analiseData }: { analiseData: AnaliseDataType }) {
             <Tooltip />
             <Legend />
             <Line type="monotone" dataKey="temperatura" stroke="#ff7300" />
-            <Line type="monotone" dataKey="custo" stroke="#ff7300" />
+            <Line type="monotone" dataKey="custo" stroke="#ff73ff" />
           </LineChart>
         </ResponsiveContainer>
 
