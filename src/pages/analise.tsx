@@ -44,7 +44,7 @@ function AnaliseDataTypeToDta(data: AnaliseDataType) {
     const keys = Object.keys(data);
     const dateToReturn: any = [];
     keys.forEach((key) => {
-      dateToReturn[key] = data[key][timestamp];
+      dateToReturn[key] = data[key as keyof AnaliseDataType][timestamp];
     });
     dateToReturn.date = date;
 
