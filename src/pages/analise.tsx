@@ -1,17 +1,17 @@
 import { Box, Button, Typography } from '@mui/material';
 import {
-  LineChart,
-  Line,
-  BarChart,
   Bar,
-  ScatterChart,
+  BarChart,
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
   Scatter,
+  ScatterChart,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
 } from 'recharts';
 
 export interface AnaliseDataType {
@@ -44,7 +44,7 @@ function AnaliseDataTypeToDta(data: AnaliseDataType) {
     const keys = Object.keys(data);
     const dateToReturn: any = [];
     keys.forEach((key) => {
-      dateToReturn[key] = data[key][timestamp];
+      dateToReturn[key] = data[key as keyof AnaliseDataType][timestamp];
     });
     dateToReturn.date = date;
 
@@ -52,58 +52,6 @@ function AnaliseDataTypeToDta(data: AnaliseDataType) {
   });
   return dta;
 }
-
-// Exemplo de dados (substituir pelo CSV processado)
-// const data = [
-//   {
-//     data: '01/01',
-//     temperatura: 25,
-//     precipitacao: 20,
-//     evapotranspiracao: 22.5,
-//     deficitHidrico: -5,
-//     custo: 25,
-//   },
-//   {
-//     data: '02/01',
-//     temperatura: 28,
-//     precipitacao: 10,
-//     evapotranspiracao: 24.0,
-//     deficitHidrico: 5,
-//     custo: 30,
-//   },
-//   {
-//     data: '03/01',
-//     temperatura: 30,
-//     precipitacao: 50,
-//     evapotranspiracao: 26.5,
-//     deficitHidrico: 20,
-//     custo: 40,
-//   },
-//   {
-//     data: '04/01',
-//     temperatura: 32,
-//     precipitacao: 0,
-//     evapotranspiracao: 28.0,
-//     deficitHidrico: 10,
-//     custo: 35,
-//   },
-//   {
-//     data: '05/01',
-//     temperatura: 29,
-//     precipitacao: 15,
-//     evapotranspiracao: 23.0,
-//     deficitHidrico: -2,
-//     custo: 20,
-//   },
-// ];
-
-const dataCost = [
-  { temperatura: 25, custo: 25 },
-  { temperatura: 28, custo: 30 },
-  { temperatura: 30, custo: 40 },
-  { temperatura: 32, custo: 35 },
-  { temperatura: 29, custo: 20 },
-];
 
 function numberFormatter(value: number) {
   return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });

@@ -83,11 +83,9 @@ export const UserContainer = ({ user }: UserContainerProps) => {
           {userDiscussion.nome} - {userDiscussion.code}
         </Typography>
       )}
-      {window.location.pathname === '/minhaconta' && (
-        <Button onClick={handleChangeCourse}>
-          Mudar minha área de discussão
-        </Button>
-      )}
+      <Button onClick={handleChangeCourse}>
+        Mudar minha área de discussão
+      </Button>
       <Box
         sx={{
           width: '100%',
