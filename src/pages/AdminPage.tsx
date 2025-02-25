@@ -190,46 +190,6 @@ export default function AdminPage() {
               </Typography>
             )}
           </Box>
-          <Box
-            sx={{
-              background: '#f4f4f4',
-              p: '1rem',
-              borderRadius: '6px',
-              maxWidth: '50%',
-              width: 'calc(100% - 16px)',
-            }}
-          >
-            <Typography
-              variant="h4"
-              sx={{
-                fontWeight: 'bold',
-                fontSize: '1.5rem',
-                mb: 3,
-                textAlign: 'center',
-              }}
-            >
-              Universidades registradas
-            </Typography>
-            <Box
-              sx={{
-                display: 'grid',
-                gap: 2,
-              }}
-            >
-              {universities.map((university) => (
-                <Button
-                  key={university.name}
-                  onClick={() => setSelectedUniversity(university)}
-                  variant="contained"
-                >
-                  <CardHeader
-                    title={getUniversityNameByCode(university.doc.id)}
-                    subheader={university.doc.id}
-                  />
-                </Button>
-              ))}
-            </Box>
-          </Box>
         </Box>
       </Box>
     </Layout>
