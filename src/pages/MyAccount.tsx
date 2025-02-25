@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { getUniversityName } from '../utils/university';
 
 function MyAccount() {
-  const { userCourse } = useDiscussions();
+  const { userDiscussion } = useDiscussions();
   const { user } = useFirebaseAuth();
 
   const [userUniversity, setUserUniversity] = useState<string | null>(null);
@@ -54,8 +54,10 @@ function MyAccount() {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <InputText label="Nome" value={user?.displayName || ''} />
               <InputText label="Email" value={user?.email || ''} />
-              <InputText label="Curso" value={userCourse?.nome || ''} />
-              <InputText label="Universidade" value={userUniversity || ''} />
+              <InputText
+                label="Área de Discussão"
+                value={userDiscussion?.nome || ''}
+              />
             </Box>
           </Box>
         </Box>
