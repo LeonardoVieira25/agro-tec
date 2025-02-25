@@ -1,7 +1,5 @@
 import { Avatar, Box, Button, Typography } from '@mui/material';
 import { User } from 'firebase/auth';
-import { useEffect, useState } from 'react';
-import { getUniversityName } from '../../utils/university';
 import { useUserData } from '../../hooks/useUserData';
 import useDiscussions from '../../hooks/useDiscussion';
 
@@ -12,13 +10,6 @@ interface UserContainerProps {
 export const UserContainer = ({ user }: UserContainerProps) => {
   const { setSelectedDiscussion } = useUserData();
   const { userDiscussion } = useDiscussions();
-
-  const [userUniversity, setUserUniversity] = useState<string | null>(null);
-  useEffect(() => {
-    if (user) {
-      setUserUniversity(getUniversityName(user));
-    }
-  }, [user]);
 
   async function handleChangeCourse() {
     await setSelectedDiscussion(null);
@@ -78,26 +69,13 @@ export const UserContainer = ({ user }: UserContainerProps) => {
       >
         {user?.displayName}
       </Typography>
-      {userUniversity && (
-        <Typography
-          sx={{
-            marginTop: '0.5rem',
-            fontWeight: 'light',
-            fontSize: '1rem',
-            textAlign: 'center',
-            px: 2,
-          }}
-        >
-          {userUniversity}
-        </Typography>
-      )}
       {userDiscussion && (
         <Typography
           sx={{
             marginTop: '0.25rem',
             fontWeight: 'light',
             fontSize: '0.75rem',
-            color: '#ccc',
+            color: '#1e1e1e',
             textAlign: 'center',
             px: 2,
           }}
