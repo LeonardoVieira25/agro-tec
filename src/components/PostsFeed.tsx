@@ -13,11 +13,10 @@ export default function PostsFeed({
 }) {
   const { posts, userDiscussion } = usePosts(parentPostId);
 
-
   const [withScores, setWithScores] = useState<{
     [key in Post['doc']['id']]: number;
-  }>() 
-  
+  }>();
+
   const withScoresSorted = useMemo(() => {
     if (!withScores) {
       return posts;
@@ -26,9 +25,9 @@ export default function PostsFeed({
       return withScores[b.doc.id] - withScores[a.doc.id];
     });
   }, [posts, withScores]);
-  
+
   return (
-    <Box sx={{ py: '3rem', maxWidth: "100%" }}>
+    <Box sx={{ py: '3rem', maxWidth: '100%' }}>
       {parentPostId ? (
         <Typography
           variant="h4"
@@ -48,7 +47,7 @@ export default function PostsFeed({
             variant="h5"
             sx={{
               fontSize: '1.125rem',
-              color: '#ccc',
+              color: '#1e1e1e',
               textTransform: 'uppercase',
             }}
           >
