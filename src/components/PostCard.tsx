@@ -171,7 +171,7 @@ export default function PostCard({
               />
             </svg>
           )}
-          <Typography style={{ marginLeft: '0.5rem', color: '#f2f2f2' }}>
+          <Typography style={{ marginLeft: '0.5rem'}}>
             {interactions?.filter((i) => i.type === 'like').length}
           </Typography>
         </IconButton>
