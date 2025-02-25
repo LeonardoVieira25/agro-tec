@@ -3,7 +3,7 @@ import { createContext, useContext, useReducer } from "react";
 const state = {
   useAdmin: {
     getSubmitted: true,
-    aproveCourse: true,
+    aproveDiscussion: true,
     rejectCourse: true,
     getIsAdmin: true,
   },

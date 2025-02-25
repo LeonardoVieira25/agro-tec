@@ -15,7 +15,6 @@ import useDiscussions from './useDiscussion';
 
 export default function usePosts(
   parentPostId?: string,
-  universityCodeParam?: string,
   discussionCodeParam?: string
 ) {
   const { userData } = useUserData();

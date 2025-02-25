@@ -114,7 +114,6 @@ function CourseSubmitPopUp({
   const [discussion, setCourse] = useState<Discussion>({
     code: '',
     nome: '',
-    universityCode: undefined,
   });
   const { user } = useFirebaseAuth();
   const { submitCourse } = useSubmission();

@@ -13,7 +13,6 @@ import { useLoadingContext } from '../context/loadingContext';
 import { db } from '../firebase/init';
 import { Discussion } from '../types/discussion';
 import { Post } from '../types/post';
-import { University } from '../types/university';
 import useFirebaseAuth from './useFirebaseAuth';
 
 function useSharedIsAdmin() {
@@ -26,8 +25,7 @@ export default function useAdmin() {
   const { user } = useFirebaseAuth();
   const [isAdmin, setIsAdmin] = useBetween(useSharedIsAdmin);
 
-  const [submittedCourses, setSubmittedCourses] = useState<Discussion[]>([]);
-  const [universities, setUniversities] = useState<University[]>([]);
+  const [submittedDiscussion, setSubmittedDiscussion] = useState<Discussion[]>([]);
 
   async function getSubmitted() {
     const q = query(collectionGroup(db, 'submitted'));
@@ -49,7 +47,7 @@ export default function useAdmin() {
             } as Discussion);
           }
         });
-        setSubmittedCourses(discussions);
+        setSubmittedDiscussion(discussions);
       })
       .catch((error) => {
         dispatch({ field: 'useAdmin.getSubmitted', payload: false });
@@ -57,27 +55,26 @@ export default function useAdmin() {
       });
   }
 
-  async function aproveCourse(discussion: Discussion) {
+  async function aproveDiscussion(discussion: Discussion) {
     if (!discussion.doc) {
       console.error('Course.doc is undefined');
       return;
     }
 
-    // Add discussion to university collection
     const discussionRef = collection(
       db,
       'discussions'
     );
     const newDocRef = doc(discussionRef, discussion.code);
 
-    dispatch({ field: 'useAdmin.aproveCourse', payload: true });
+    dispatch({ field: 'useAdmin.aproveDiscussion', payload: true });
 
     await setDoc(newDocRef, {
       code: discussion.code,
       nome: discussion.nome,
     }).catch((error) => {
       console.error('Error adding document: ', error);
-      dispatch({ field: 'useAdmin.aproveCourse', payload: false });
+      dispatch({ field: 'useAdmin.aproveDiscussion', payload: false });
     });
 
     // delete discussion.doc;
@@ -86,7 +83,7 @@ export default function useAdmin() {
     });
 
     await getSubmitted();
-    dispatch({ field: 'useAdmin.aproveCourse', payload: false });
+    dispatch({ field: 'useAdmin.aproveDiscussion', payload: false });
   }
 
   async function rejectCourse(discussion: Discussion) {
@@ -102,7 +99,7 @@ export default function useAdmin() {
     });
 
     await getSubmitted();
-    dispatch({ field: 'useAdmin.aproveCourse', payload: true });
+    dispatch({ field: 'useAdmin.aproveDiscussion', payload: true });
   }
 
   async function getIsAdmin() {
@@ -114,14 +111,6 @@ export default function useAdmin() {
 
     try {
       setIsAdmin(true);
-      // dispatch({ field: 'useAdmin.getIsAdmin', payload: true });
-      // const docSnapshot = await getDoc(doc(db, 'admins', user.uid));
-
-      // dispatch({ field: 'useAdmin.getIsAdmin', payload: false });
-      // if (docSnapshot.exists()) {
-      // } else {
-      //   setIsAdmin(false);
-      // }
     } catch (error) {
       dispatch({ field: 'useAdmin.getIsAdmin', payload: false });
       console.error('Error fetching admin status:', error);
@@ -129,47 +118,16 @@ export default function useAdmin() {
     }
   }
 
-  async function getUniversities() {
-    const q = query(collection(db, 'university'));
-
-    const querySnapshot = getDocs(q);
-
-    // dispatch({ field: "useAdmin.getUniversities", payload: true });
-    return querySnapshot
-      .then((querySnapshot) => {
-        const universities: any[] = [];
-
-        // dispatch({ field: "useAdmin.getUniversities", payload: false });
-
-        querySnapshot.forEach((doc) => {
-          if (doc.exists()) {
-            universities.push({
-              ...doc.data(),
-              doc: doc,
-            });
-          }
-        });
-        setUniversities(universities);
-        return universities;
-      })
-      .catch((error) => {
-        // dispatch({ field: "useAdmin.getUniversities", payload: false });
-        console.log('Error getting documents: ', error);
-      });
-  }
-
-  async function deleteCourse(discussion: Discussion) {
+  async function deleteDiscussion(discussion: Discussion) {
     if (!discussion.doc) {
-      console.error('Course.doc is undefined');
+      console.error('Discussion.doc is undefined');
       return;
     }
-    // dispatch({ field: "useAdmin.deleteCourse", payload: true });
     await deleteDoc(discussion.doc.ref).catch((error) => {
       console.error('Error deleting document: ', error);
     });
 
     await getSubmitted();
-    // dispatch({ field: "useAdmin.deleteCourse", payload: false });
   }
 
   async function deletePost(post: Post) {
@@ -177,14 +135,13 @@ export default function useAdmin() {
       console.error('post.doc is undefined');
       return;
     }
-    // dispatch({ field: "useAdmin.deletePost", payload: true });
     await deleteDoc(post.doc.ref).catch((error) => {
       console.error('Error deleting document: ', error);
     });
 
     await getSubmitted();
-    // dispatch({ field: "useAdmin.deletePost", payload: false });
   }
+
 
   useEffect(() => {
     if (!user) {
@@ -199,16 +156,14 @@ export default function useAdmin() {
     if (!isAdmin) return;
 
     getSubmitted();
-    getUniversities();
   }, [isAdmin]);
 
   return {
     isAdmin,
-    submittedCourses,
-    aproveCourse,
+    submittedDiscussion,
+    aproveDiscussion,
     rejectCourse,
-    universities,
-    deleteCourse,
+    deleteDiscussion,
     deletePost,
   };
 }

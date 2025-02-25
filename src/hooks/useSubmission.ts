@@ -5,7 +5,6 @@ import { db } from "../firebase/init";
 import useFirebaseAuth from "./useFirebaseAuth";
 import { Discussion } from "../types/discussion";
 import { useBetween } from "use-between";
-import { getUniversityCode } from "../utils/university";
 
 const useSharedSubmission = () => {
   return useState<Discussion | null>(null);
@@ -26,7 +25,6 @@ export function useSubmission() {
   async function submitCourse(user: User, discussion: Discussion) {
     await setDoc(doc(db, "users", user.uid, "submitted", "discussion"), {
       ...discussion,
-      universityCode: getUniversityCode(user),
     });
     setSubmission(discussion);
   }

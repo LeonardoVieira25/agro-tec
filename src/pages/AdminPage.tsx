@@ -1,3 +1,4 @@
+import { Delete } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -6,46 +7,47 @@ import {
   CardContent,
   CardHeader,
   Typography,
-} from '@mui/material';
-import Layout from '../components/Layout/Index';
-import useAdmin from '../hooks/useAdmin';
-import { useEffect, useState } from 'react';
-import { University } from '../types/university';
-import useDiscussions from '../hooks/useDiscussion';
-import { Discussion } from '../types/discussion';
-import usePosts from '../hooks/usePosts';
-import PostCard from '../components/PostCard';
-import { Delete } from '@mui/icons-material';
-import { getUniversityNameByCode } from '../utils/university';
-import { useLoadingContext } from '../context/loadingContext';
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import Layout from "../components/Layout/Index";
+import PostCard from "../components/PostCard";
+import { useLoadingContext } from "../context/loadingContext";
+import useAdmin from "../hooks/useAdmin";
+import useDiscussions from "../hooks/useDiscussion";
+import usePosts from "../hooks/usePosts";
+import { Discussion } from "../types/discussion";
 
 export default function AdminPage() {
   const { useAdmin: useAdminLoading } = useLoadingContext();
   const adminHook = useAdmin();
-  const {
-    isAdmin,
-    submittedCourses,
-    aproveCourse,
-    rejectCourse,
-    universities,
-  } = adminHook;
+  const { isAdmin, submittedDiscussion, aproveDiscussion, rejectCourse } =
+    adminHook;
 
-  const [selectedUniversity, setSelectedUniversity] = useState<University>();
+  const [selectedDiscussion, setSelectedDiscussion] = useState<Discussion>();
+  const [discussions, setDiscussions] = useState<Discussion[]>([]);
+
+  const { getDiscussions } = useDiscussions();
+
+  useEffect(() => {
+    if (!isAdmin) return;
+
+    getDiscussions().then(setDiscussions);
+  }, [isAdmin]);
 
   if (useAdminLoading.getIsAdmin) {
     return (
       <Layout>
         <Box
           sx={{
-            py: '3rem',
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
+            py: "3rem",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
           }}
         >
           <Typography
             variant="h4"
-            sx={{ fontWeight: 'medium', fontSize: '1rem' }}
+            sx={{ fontWeight: "medium", fontSize: "1rem" }}
           >
             Carregando...
           </Typography>
@@ -59,15 +61,15 @@ export default function AdminPage() {
       <Layout>
         <Box
           sx={{
-            py: '3rem',
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
+            py: "3rem",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
           }}
         >
           <Typography
             variant="h4"
-            sx={{ fontWeight: 'medium', fontSize: '1rem' }}
+            sx={{ fontWeight: "medium", fontSize: "1rem" }}
           >
             Você não tem permissão para acessar esta página
           </Typography>
@@ -76,12 +78,11 @@ export default function AdminPage() {
     );
   }
 
-  if (selectedUniversity) {
+  if (selectedDiscussion) {
     return (
       <Layout>
-        <UniversityScreen
-          selectedUniversity={selectedUniversity}
-          exit={() => setSelectedUniversity(undefined)}
+        <DiscussionsScreen
+          exit={() => setSelectedDiscussion(undefined)}
           adminHook={adminHook}
         />
       </Layout>
@@ -90,67 +91,59 @@ export default function AdminPage() {
 
   return (
     <Layout>
-      <Box sx={{ py: '3rem', width: '100%' }}>
+      <Box sx={{ py: "3rem", width: "100%" }}>
         <Box
           sx={{
-            display: 'flex',
+            display: "flex",
             gap: 8,
-            width: '100%',
-            justifyContent: 'center',
-            '@media(max-width: 600px)': {
-              flexDirection: 'column',
+            width: "100%",
+            justifyContent: "center",
+            "@media(max-width: 600px)": {
+              flexDirection: "column",
               gap: 4,
             },
           }}
         >
           <Box
             sx={{
-              background: '#f4f4f4',
-              p: '1rem',
-              borderRadius: '6px',
-              maxWidth: '50%',
-              width: 'calc(100% - 16px)',
+              background: "#f4f4f4",
+              p: "1rem",
+              borderRadius: "6px",
+              maxWidth: "50%",
+              width: "calc(100% - 16px)",
             }}
           >
             <Typography
               variant="h4"
               sx={{
-                fontWeight: 'bold',
-                fontSize: '1.5rem',
+                fontWeight: "bold",
+                fontSize: "1.5rem",
                 mb: 3,
-                textAlign: 'center',
+                textAlign: "center",
               }}
             >
               Áreas de discussão submetidas para aprovação
             </Typography>
-            {submittedCourses.length > 0 ? (
+            {submittedDiscussion.length > 0 ? (
               <>
                 <Box
                   sx={{
-                    display: 'flex',
+                    display: "flex",
                     gap: 2,
-                    flexWrap: 'wrap',
+                    flexWrap: "wrap",
                   }}
                 >
-                  {submittedCourses.map((discussion) => (
+                  {submittedDiscussion.map((discussion) => (
                     <Card
                       key={discussion.code}
-                      sx={{ backgroundColor: '#ccc', color: '#2e2e2e' }}
+                      sx={{ backgroundColor: "#ccc", color: "#2e2e2e" }}
                     >
                       <CardHeader title={discussion.nome} />
                       <CardContent>
                         <Typography
                           sx={{
-                            fontSize: '1.125rem',
-                            textTransform: 'uppercase',
-                          }}
-                        >
-                          {discussion.universityCode}
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontSize: '1rem',
-                            color: '#2e2e2e',
+                            fontSize: "1rem",
+                            color: "#2e2e2e",
                           }}
                         >
                           {discussion.code}
@@ -160,7 +153,7 @@ export default function AdminPage() {
                         <Button
                           variant="contained"
                           color="primary"
-                          onClick={() => aproveCourse(discussion)}
+                          onClick={() => aproveDiscussion(discussion)}
                         >
                           Aprovar
                         </Button>
@@ -180,15 +173,56 @@ export default function AdminPage() {
               <Typography
                 variant="h4"
                 sx={{
-                  fontWeight: 'medium',
-                  fontSize: '1rem',
+                  fontWeight: "medium",
+                  fontSize: "1rem",
                   mt: 3,
-                  textAlign: 'center',
+                  textAlign: "center",
                 }}
               >
                 Não há discussãos submetidos para aprovação
               </Typography>
             )}
+          </Box>
+
+          <Box
+            sx={{
+              background: "#f4f4f4",
+              p: "1rem",
+              borderRadius: "6px",
+              maxWidth: "50%",
+              width: "calc(100% - 16px)",
+            }}
+          >
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: "bold",
+                fontSize: "1.5rem",
+                mb: 3,
+                textAlign: "center",
+              }}
+            >
+              Discussões registradas
+            </Typography>
+            <Box
+              sx={{
+                display: "grid",
+                gap: 2,
+              }}
+            >
+              {discussions.map((discussion) => (
+                <Button
+                  key={discussion.code}
+                  onClick={() => setSelectedDiscussion(discussion)}
+                  variant="contained"
+                >
+                  <CardHeader
+                    title={discussion.nome}
+                    subheader={discussion.code}
+                  />
+                </Button>
+              ))}
+            </Box>
           </Box>
         </Box>
       </Box>
@@ -196,34 +230,29 @@ export default function AdminPage() {
   );
 }
 
-function UniversityScreen({
-  selectedUniversity,
+function DiscussionsScreen({
   exit,
   adminHook,
 }: {
-  selectedUniversity: University;
   exit: () => void;
   adminHook: ReturnType<typeof useAdmin>;
 }) {
-  const { deleteCourse } = adminHook;
+  const { deleteDiscussion } = adminHook;
 
   const { getDiscussions } = useDiscussions();
 
   const [discussions, setCourses] = useState<Discussion[]>([]);
 
-  const [selectedCourse, setSelectedDiscussion] = useState<Discussion>();
+  const [selectedDiscussion, setSelectedDiscussion] = useState<Discussion>();
 
   useEffect(() => {
-    getDiscussions().then((discussions) =>
-      setCourses(discussions)
-    );
-  }, [selectedUniversity]);
+    getDiscussions().then((discussions) => setCourses(discussions));
+  }, [selectedDiscussion]);
 
-  if (selectedCourse) {
+  if (selectedDiscussion) {
     return (
-      <CourseScreen
-        selectedCourse={selectedCourse}
-        selectedUniversity={selectedUniversity}
+      <DiscussionScreen
+        selectedDiscussion={selectedDiscussion}
         exit={() => setSelectedDiscussion(undefined)}
         adminHook={adminHook}
       />
@@ -231,51 +260,21 @@ function UniversityScreen({
   }
 
   return (
-    <Box sx={{ py: '3rem' }}>
+    <Box sx={{ py: "3rem" }}>
       <Button onClick={exit}>Voltar</Button>
-      <Typography
-        variant="h3"
-        sx={{
-          fontWeight: 'bold',
-          fontSize: '1.5rem',
-          mb: 3,
-          textAlign: 'center',
-        }}
-      >
-        {getUniversityNameByCode(selectedUniversity.name)}
-      </Typography>
       <Box
         sx={{
-          display: 'flex',
+          display: "flex",
           gap: 4,
-          flexWrap: 'wrap',
+          flexWrap: "wrap",
           py: 4,
-          justifyContent: 'center',
+          justifyContent: "center",
         }}
       >
         {discussions.map((discussion) => (
-          <Card
-            key={discussion.code}
-            sx={{ backgroundColor: '#1E1E1E', color: '#f2f2f2' }}
-          >
-            <CardHeader title={discussion.nome} />
+          <Card key={discussion.code}>
+            <CardHeader title={discussion.nome} subheader={discussion.code} />
             <CardContent>
-              <Typography
-                sx={{
-                  fontSize: '1rem',
-                  color: '#ccc',
-                }}
-              >
-                {discussion.universityCode}
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: '1rem',
-                  color: '#ccc',
-                }}
-              >
-                {discussion.code}
-              </Typography>
               <CardActions>
                 <Button
                   variant="contained"
@@ -289,9 +288,9 @@ function UniversityScreen({
                   variant="contained"
                   color="error"
                   onClick={() =>
-                    deleteCourse(discussion).then(() =>
-                      getDiscussions().then(
-                        (discussions) => setCourses(discussions)
+                    deleteDiscussion(discussion).then(() =>
+                      getDiscussions().then((discussions) =>
+                        setCourses(discussions)
                       )
                     )
                   }
@@ -307,80 +306,61 @@ function UniversityScreen({
   );
 }
 
-function CourseScreen({
-  selectedCourse,
-  selectedUniversity,
+function DiscussionScreen({
+  selectedDiscussion,
   exit,
   adminHook,
 }: {
-  selectedCourse: Discussion;
-  selectedUniversity: University;
+  selectedDiscussion: Discussion;
   exit: () => void;
   adminHook: ReturnType<typeof useAdmin>;
 }) {
-  const { posts } = usePosts(
-    undefined,
-    selectedUniversity.name,
-    selectedCourse.code
-  );
+  const { posts } = usePosts(undefined, selectedDiscussion.code);
   const { deletePost } = adminHook;
 
   return (
-    <Box sx={{ width: '100%', py: '3rem' }}>
+    <Box sx={{ width: "100%", py: "3rem" }}>
       <Button onClick={exit}>Voltar</Button>
       <Box
         sx={{
           py: 4,
         }}
       >
-        <Typography
-          variant="h3"
-          sx={{
-            fontWeight: 'bold',
-            fontSize: '2rem',
-            mb: 3,
-            textAlign: 'center',
-          }}
-        >
-          {selectedCourse.nome}
-        </Typography>
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '1rem',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "1rem",
           }}
         >
           <Typography
             variant="h5"
             sx={{
-              fontWeight: 'medium',
-              fontSize: '1.125rem',
-              color: '#ccc',
-              textAlign: 'center',
+              fontWeight: "medium",
+              fontSize: "1.125rem",
+              textAlign: "center",
             }}
           >
-            {getUniversityNameByCode(selectedUniversity.doc.id)}
+            {selectedDiscussion.nome}
           </Typography>
           -
           <Typography
             sx={{
-              fontWeight: 'medium',
-              fontSize: '1rem',
-              color: '#ccc',
-              textAlign: 'center',
+              fontWeight: "medium",
+              fontSize: "1rem",
+              textAlign: "center",
             }}
           >
-            {selectedCourse.code}
+            {selectedDiscussion.code}
           </Typography>
         </Box>
       </Box>
 
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
+          display: "flex",
+          flexDirection: "column",
           gap: 4,
         }}
       >
