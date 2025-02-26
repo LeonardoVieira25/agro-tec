@@ -21,56 +21,18 @@ Antes de começar, certifique-se de ter o Node.js e o npm (ou Yarn) instalados n
 
 - [Node.js](https://nodejs.org/)
 - npm (geralmente vem com o Node.js) ou [Yarn](https://yarnpkg.com/)
+- docker
 
 ## Instalação
 
 Siga os passos abaixo para configurar o ambiente de desenvolvimento:
 
-1. Clone o repositório:
+1. Descomprima os arquivos
+2. Navegue pelo terminal até onde descomprimiu os arquivos e execute:
+```
+docker compose up
+```
 
-   \`\`\`
-   git clone https://github.com/LeonardoVieira25/agro-tec.git
-   \`\`\`
-
-2. Navegue até o diretório do projeto:
-
-   \`\`\`
-   cd agro-tec
-   \`\`\`
-
-3. Instale as dependências do projeto:
-
-   Usando npm:
-
-   \`\`\`
-   npm install
-   \`\`\`
-
-   Ou usando Yarn:
-
-   \`\`\`
-   yarn
-   \`\`\`
-
-5. Rode o projeto localmente:
-
-   Usando npm:
-
-   \`\`\`
-   npm run dev
-   \`\`\`
-
-   Ou usando Yarn:
-
-   \`\`\`
-   yarn dev
-   \`\`\`
-
-6. Abra seu navegador e acesse:
-
-   \`\`\`
-   http://localhost:5173
-   \`\`\`
 
 
 ## Licença
